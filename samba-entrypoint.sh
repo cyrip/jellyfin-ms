@@ -50,13 +50,13 @@ cp ${SMB_CONF_SYSTEM} ${SMB_CONF}
 sed "s/{{SAMBAUSER}}/$SAMBA_USERNAME/g" ${SMB_USER_TEMPLATE} >> ${SMB_CONF}
 
 # Add group if it doesn't exist
-if ! getent group $SAMBA_USERNAME > /dev/null; then
-    groupadd -g $GROUP_ID $SAMBA_USERNAME
+if ! getent group ${GROUP_ID} > /dev/null; then
+    groupadd -g ${GROUP_ID} ${SAMBA_USERNAME}
 fi
 
 # Add user if it doesn't exist
 if ! id -u $SAMBA_USERNAME > /dev/null 2>&1; then
-    useradd -u $USER_ID -g $GROUP_ID -M -s /sbin/nologin $SAMBA_USERNAME
+    useradd -u $USER_ID -g $GROUP_ID -m -s /bin/bash $SAMBA_USERNAME
     (echo "$SAMBA_PASSWORD"; echo "$SAMBA_PASSWORD") | smbpasswd -s -a $SAMBA_USERNAME
 fi
 
