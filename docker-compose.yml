@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   jellyfin:
     image: jellyfin/jellyfin
@@ -33,4 +31,4 @@ services:
       - ./samba/config:/etc/samba
       - ./samba/log:/var/log/samba
     command: >
-      --username sambauser --password ${SAMBA_USER_PASS} --uid ${MEDIA_USER_UID} --gid ${MEDIA_USER_GID}
+      --username ${SAMBA_USER} --password ${SAMBA_USER_PASS} --uid ${MEDIA_USER_UID} --gid ${MEDIA_USER_GID}
