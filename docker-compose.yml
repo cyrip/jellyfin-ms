@@ -16,3 +16,21 @@ services:
       - ./cache:/cache
       - ./media:/media
     restart: unless-stopped
+  samba:
+    image: cyrip/samba-debian:latest
+    container_name: samba
+    user: root
+    restart: always
+    entrypoint: ["/entrypoint.sh"]
+    ports:
+      - "137:137/udp"
+      - "138:138/udp"
+      - "139:139/tcp"
+      - "445:445/tcp"
+    volumes:
+      - ./samba-entrypoint.sh:/entrypoint.sh
+      - ./media:/media
+      - ./samba/config:/etc/samba
+      - ./samba/log:/var/log/samba
+    command: >
+      --username sambauser --password ${SAMBA_USER_PASS} --uid ${MEDIA_USER_UID} --gid ${MEDIA_USER_GID}
