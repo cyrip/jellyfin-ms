@@ -33,8 +33,10 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-SMB_CONF=/etc/samba/smb.conf
-SMB_USER_TEMPLATE=/etc/samba/smb.user.conf.tpl
+SMB_CONF_BASE=/etc/samba
+SMB_CONF=${SMB_CONF_BASE}/smb.conf
+SMB_CONF_SYSTEM=${SMB_CONF_BASE}/smb.conf.system
+SMB_USER_TEMPLATE=${SMB_CONF_BASE}/smb.user.conf.tpl
 
 USER_ID=${USER_ID:-1000}
 GROUP_ID=${GROUP_ID:-1000}
@@ -44,6 +46,7 @@ SAMBA_PASSWORD=${SAMBA_PASSWORD:-sambapass}
 echo -ne "User: ${SAMBA_USERNAME} ${USER_ID}:${GROUP_ID}\n"
 
 # Change samba username in the template file
+cp ${SMB_CONF_SYSTEM} ${SMB_CONF}
 sed "s/{{SAMBAUSER}}/$SAMBA_USERNAME/g" ${SMB_USER_TEMPLATE} >> ${SMB_CONF}
 
 # Add group if it doesn't exist

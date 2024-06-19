@@ -14,8 +14,9 @@ services:
       - ./cache:/cache
       - ./media:/media
     restart: unless-stopped
+
   samba:
-    image: cyrip/samba-debian:latest
+    image: cyrip/samba:latest
     container_name: samba
     user: root
     restart: always
