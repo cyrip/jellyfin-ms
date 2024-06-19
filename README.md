@@ -17,6 +17,14 @@ The samba share is the ./media directory and Jellyfin will serve the movies from
 SAMBA_USER=admin
 SAMBA_USER_PASS=admin
 ```
+
+### Start the servers - later I will create a sysdemd config for it
+```sh
+make run # OR
+docker-compose up # OR in background
+docker-compose up -d
+```
+
 ### You can reach the MS with SMB client and you need to login with the given smb user and password
 ```sh
 sudo apt-get update && \
@@ -35,3 +43,8 @@ http://192.168.0.200
 ```
 
 ### Install Jellyfin mobile application and set the server URL to http://192.168.0.200:8096
+
+### Clean the files
+```sh
+make clean
+```
