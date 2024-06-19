@@ -33,12 +33,18 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+SMB_CONF=/etc/samba/smb.conf
+SMB_USER_TEMPLATE=/etc/samba/smb.user.conf.tpl
+
 USER_ID=${USER_ID:-1000}
 GROUP_ID=${GROUP_ID:-1000}
 SAMBA_USERNAME=${SAMBA_USERNAME:-sambauser}
 SAMBA_PASSWORD=${SAMBA_PASSWORD:-sambapass}
 
-echo -ne "User: ${SAMBA_USERNAME}:${SAMBA_PASSWORD} ${USER_ID}:${GROUP_ID}\n"
+echo -ne "User: ${SAMBA_USERNAME} ${USER_ID}:${GROUP_ID}\n"
+
+# Change samba username in the template file
+sed "s/{{SAMBAUSER}}/$SAMBA_USERNAME/g" ${SMB_USER_TEMPLATE} >> ${SMB_CONF}
 
 # Add group if it doesn't exist
 if ! getent group $SAMBA_USERNAME > /dev/null; then
@@ -51,9 +57,7 @@ if ! id -u $SAMBA_USERNAME > /dev/null 2>&1; then
     (echo "$SAMBA_PASSWORD"; echo "$SAMBA_PASSWORD") | smbpasswd -s -a $SAMBA_USERNAME
 fi
 
-cat /etc/passwd
-# Start Samba with the provided arguments
-# exec /usr/sbin/smbd
+# Start nmbd as a daemon
 nmbd -D
 
 # Start smbd in the foreground
