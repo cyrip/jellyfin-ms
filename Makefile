@@ -24,4 +24,5 @@ clean:
 .PHONY: run
 run:
 	@echo "Running Jellyfin/Samba MS ..."
+	./change-permissions.sh
 	docker-compose -f docker-compose.yml up -d

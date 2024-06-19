@@ -3,7 +3,7 @@
 ### Ensure that system directory and content has the proper owner - if it is not your current user
 ```sh
 sudo groupadd -g 1010 media && sudo useradd -u 1010 -g 1010 -s /sbin/nologin -m media
-for d in "cache config media samba";do sudo chown media:media -R $d;done
+for d in "cache" "config" "media" "samba";do sudo chown media:media -R $d;done
 ```
 ### Set the uid & gid envs samba and Jellyfin will run with this user privileges
 ```sh
