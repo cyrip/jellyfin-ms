@@ -17,7 +17,7 @@ build:
 .PHONY: clean
 clean:
 	@echo "Removing Docker image $(IMAGE_NAME):$(TAG)..."
-	docker-compose -f docker-compose.yml rm -fsv
+	docker compose -f docker-compose.yml rm -fsv
 	docker rmi $(IMAGE_NAME):$(TAG)
 
 # Run target (optional, can be used to run the built image)
@@ -25,4 +25,4 @@ clean:
 run:
 	@echo "Running Jellyfin/Samba MS ..."
 	./change-permissions.sh
-	docker-compose -f docker-compose.yml up -d
+	docker compose -f docker-compose.yml up -d
